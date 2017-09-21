@@ -13,5 +13,16 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:textSize="20sp" />
+
     </ScrollView>
+
+    <TextView
+        android:textSize="24sp"
+        android:text="@string/error_message"
+        android:visibility="invisible"
+        android:id="@+id/errorMessageView"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </FrameLayout>

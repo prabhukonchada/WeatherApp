@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -21,6 +22,7 @@ import weatherapp.prabhukonchada.android.weatherapp.utilities.OpenWeatherJsonUti
 public class MainActivity extends AppCompatActivity {
 
     private TextView mWeatherTextView;
+    private TextView errorMessageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
          * do things like set the text of the TextView.
          */
         mWeatherTextView = (TextView) findViewById(R.id.tv_weather_data);
-
+        errorMessageView = (TextView) findViewById(R.id.errorMessageView);
 
         loadWeatherData();
     }
@@ -75,11 +77,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String[] weatherData) {
+            Log.d("Weather Data",String.valueOf(weatherData));
             if(weatherData != null)
             {
+                showWeatherData();
                 for (String weatherString : weatherData) {
                     mWeatherTextView.append((weatherString) + "\n\n\n");
                 }
+            }
+            else
+            {
+                showErrorMessage();
             }
         }
     }
@@ -89,4 +97,18 @@ public class MainActivity extends AppCompatActivity {
         String location = SunshinePreferences.getPreferredWeatherLocation(this);
         new RetreiveWeatherFromNetwork().execute(location);
     }
+
+    private void showWeatherData()
+    {
+        mWeatherTextView.setVisibility(View.VISIBLE);
+        errorMessageView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showErrorMessage()
+    {
+        Log.d("Show","error");
+        mWeatherTextView.setVisibility(View.INVISIBLE);
+        errorMessageView.setVisibility(View.VISIBLE);
+    }
+
 }
