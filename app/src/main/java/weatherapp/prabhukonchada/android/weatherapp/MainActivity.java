@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -35,6 +37,23 @@ public class MainActivity extends AppCompatActivity {
         loadWeatherData();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.forecast,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == R.id.refresh)
+        {
+            loadWeatherData();
+            mWeatherTextView.setText("");
+        }
+
+        return true;
+    }
 
     class RetreiveWeatherFromNetwork extends AsyncTask<String ,Void,String[]>
     {
@@ -51,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
             return null;
         }
 

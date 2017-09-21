@@ -2,6 +2,7 @@
 <resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
 
     <string name="app_name">Weather App</string>
+    <string name="action_refresh">Refresh</string>
 
 
     <!-- - - - - - - - - - - - - -->
