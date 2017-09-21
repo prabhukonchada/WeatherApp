@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView mWeatherTextView;
     private TextView errorMessageView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
          */
         mWeatherTextView = (TextView) findViewById(R.id.tv_weather_data);
         errorMessageView = (TextView) findViewById(R.id.errorMessageView);
+        progressBar = (ProgressBar) findViewById(R.id.progress);
 
         loadWeatherData();
     }
@@ -60,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
     class RetreiveWeatherFromNetwork extends AsyncTask<String ,Void,String[]>
     {
         @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
         protected String[] doInBackground(String... params) {
             String location = params[0];
             Log.d("Loc",location);
@@ -78,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String[] weatherData) {
             Log.d("Weather Data",String.valueOf(weatherData));
+            progressBar.setVisibility(View.INVISIBLE);
             if(weatherData != null)
             {
                 showWeatherData();
