@@ -4,13 +4,17 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URL;
 
 import weatherapp.prabhukonchada.android.weatherapp.data.SunshinePreferences;
 import weatherapp.prabhukonchada.android.weatherapp.utilities.NetworkUtils;
+import weatherapp.prabhukonchada.android.weatherapp.utilities.OpenWeatherJsonUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,11 +41,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String[] doInBackground(String... params) {
             String location = params[0];
+            Log.d("Loc",location);
             URL url = NetworkUtils.buildUrl(location);
 
             try {
                 String weatherResponse = NetworkUtils.getResponseFromHttpUrl(url);
-            } catch (IOException e) {
+                String[] jsonWeatherData = OpenWeatherJsonUtils.getSimpleWeatherStringsFromJson(getApplicationContext(),weatherResponse);
+                return jsonWeatherData;
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -51,7 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String[] weatherData) {
-            super.onPostExecute(weatherData);
+            if(weatherData != null)
+            {
+                for (String weatherString : weatherData) {
+                    mWeatherTextView.append((weatherString) + "\n\n\n");
+                }
+            }
         }
     }
 

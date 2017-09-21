@@ -16,6 +16,7 @@
 package weatherapp.prabhukonchada.android.weatherapp.utilities;
 
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,8 +70,8 @@ public final class NetworkUtils {
      * @return The URL to use to query the weather server.
      */
     public static URL buildUrl(String locationQuery) {
-        Uri uri = Uri.parse(locationQuery).buildUpon().appendQueryParameter(QUERY_PARAM,locationQuery).build();
-
+        Uri uri = Uri.parse(DYNAMIC_WEATHER_URL).buildUpon().appendQueryParameter(QUERY_PARAM,locationQuery).build();
+        Log.d("Url Formed",uri.toString());
         URL url = null;
         try {
             url = new URL(uri.toString());
