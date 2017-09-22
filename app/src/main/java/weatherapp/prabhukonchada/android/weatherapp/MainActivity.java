@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +23,7 @@ import weatherapp.prabhukonchada.android.weatherapp.utilities.OpenWeatherJsonUti
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mWeatherTextView;
+    RecyclerView weatherList;
     private TextView errorMessageView;
     private ProgressBar progressBar;
 
@@ -31,11 +32,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
-         * Using findViewById, we get a reference to our TextView from xml. This allows us to
-         * do things like set the text of the TextView.
-         */
-        mWeatherTextView = (TextView) findViewById(R.id.tv_weather_data);
+
+
+        weatherList = (RecyclerView) findViewById(R.id.weatherList);
         errorMessageView = (TextView) findViewById(R.id.errorMessageView);
         progressBar = (ProgressBar) findViewById(R.id.progress);
 
@@ -54,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.refresh)
         {
             loadWeatherData();
-            mWeatherTextView.setText("");
         }
 
         return true;
@@ -90,9 +88,6 @@ public class MainActivity extends AppCompatActivity {
             if(weatherData != null)
             {
                 showWeatherData();
-                for (String weatherString : weatherData) {
-                    mWeatherTextView.append((weatherString) + "\n\n\n");
-                }
             }
             else
             {
@@ -109,14 +104,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void showWeatherData()
     {
-        mWeatherTextView.setVisibility(View.VISIBLE);
+        weatherList.setVisibility(View.VISIBLE);
         errorMessageView.setVisibility(View.INVISIBLE);
     }
 
     private void showErrorMessage()
     {
         Log.d("Show","error");
-        mWeatherTextView.setVisibility(View.INVISIBLE);
+        weatherList.setVisibility(View.INVISIBLE);
         errorMessageView.setVisibility(View.VISIBLE);
     }
 
