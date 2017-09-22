@@ -16,11 +16,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherI
 
     String[] weatherData;
 
-    public WeatherAdapter(String[] weatherData, Context context)
-    {
-        this.weatherData = weatherData;
-    }
-
     @Override
     public WeatherItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -33,7 +28,11 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherI
 
     @Override
     public int getItemCount() {
-        return weatherData.length;
+        if(weatherData != null)
+        {
+            return weatherData.length;
+        }
+        return 0;
     }
 
     @Override
@@ -51,6 +50,12 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherI
             weatherDataItem = (TextView)itemView.findViewById(R.id.weatherInfo);
         }
 
+    }
+
+    public void setWeatherData(String[] weatherData)
+    {
+        this.weatherData = weatherData;
+        notifyDataSetChanged();
     }
 
 }

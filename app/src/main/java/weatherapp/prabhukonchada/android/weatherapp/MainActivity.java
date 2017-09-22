@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         weatherList.setLayoutManager(layoutManager);
+        weatherAdapter = new WeatherAdapter();
+        weatherList.setAdapter(weatherAdapter);
         loadWeatherData();
     }
 
@@ -106,8 +108,7 @@ public class MainActivity extends AppCompatActivity {
     private void showWeatherData(String[] weatherData)
     {
         weatherList.setVisibility(View.VISIBLE);
-        weatherAdapter = new WeatherAdapter(weatherData,this);
-        weatherList.setAdapter(weatherAdapter);
+        weatherAdapter.setWeatherData(weatherData);
         errorMessageView.setVisibility(View.INVISIBLE);
     }
 
