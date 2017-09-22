@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -22,12 +23,13 @@ import weatherapp.prabhukonchada.android.weatherapp.data.SunshinePreferences;
 import weatherapp.prabhukonchada.android.weatherapp.utilities.NetworkUtils;
 import weatherapp.prabhukonchada.android.weatherapp.utilities.OpenWeatherJsonUtils;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements  WeatherAdapter.OnWeatherListItemClicked{
 
     RecyclerView weatherList;
     private TextView errorMessageView;
     private ProgressBar progressBar;
     WeatherAdapter weatherAdapter;
+    Toast weatherToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         weatherList.setLayoutManager(layoutManager);
-        weatherAdapter = new WeatherAdapter();
+        weatherAdapter = new WeatherAdapter(this);
         weatherList.setAdapter(weatherAdapter);
         loadWeatherData();
     }
@@ -59,6 +61,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    public void onItemClicked(String data) {
+        if(weatherToast != null) { weatherToast.cancel(); }
+        weatherToast=Toast.makeText(this,data,Toast.LENGTH_LONG);
+        weatherToast.show();
     }
 
     class RetreiveWeatherFromNetwork extends AsyncTask<String ,Void,String[]>
