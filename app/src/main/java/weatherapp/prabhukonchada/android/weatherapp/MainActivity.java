@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         weatherList = (RecyclerView) findViewById(R.id.weatherList);
         errorMessageView = (TextView) findViewById(R.id.errorMessageView);
         progressBar = (ProgressBar) findViewById(R.id.progress);
