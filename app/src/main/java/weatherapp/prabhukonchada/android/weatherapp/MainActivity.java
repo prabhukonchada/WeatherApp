@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView weatherList;
     private TextView errorMessageView;
     private ProgressBar progressBar;
+    WeatherAdapter weatherAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
         weatherList = (RecyclerView) findViewById(R.id.weatherList);
         errorMessageView = (TextView) findViewById(R.id.errorMessageView);
         progressBar = (ProgressBar) findViewById(R.id.progress);
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        weatherList.setLayoutManager(layoutManager);
         loadWeatherData();
     }
 
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             progressBar.setVisibility(View.INVISIBLE);
             if(weatherData != null)
             {
-                showWeatherData();
+                showWeatherData(weatherData);
             }
             else
             {
@@ -100,9 +103,11 @@ public class MainActivity extends AppCompatActivity {
         new RetreiveWeatherFromNetwork().execute(location);
     }
 
-    private void showWeatherData()
+    private void showWeatherData(String[] weatherData)
     {
         weatherList.setVisibility(View.VISIBLE);
+        weatherAdapter = new WeatherAdapter(weatherData,this);
+        weatherList.setAdapter(weatherAdapter);
         errorMessageView.setVisibility(View.INVISIBLE);
     }
 
