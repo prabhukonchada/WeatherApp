@@ -20,9 +20,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         data = getIntent().getStringExtra(WEATHER_INFO);
-
         weatherInfoItem = (TextView) findViewById(R.id.weatherInfoItem);
         weatherInfoItem.setText(data);
     }
