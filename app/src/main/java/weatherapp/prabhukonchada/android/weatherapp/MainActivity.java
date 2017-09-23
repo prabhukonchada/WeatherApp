@@ -1,5 +1,7 @@
 package weatherapp.prabhukonchada.android.weatherapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements  WeatherAdapter.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         weatherList = (RecyclerView) findViewById(R.id.weatherList);
         errorMessageView = (TextView) findViewById(R.id.errorMessageView);
         progressBar = (ProgressBar) findViewById(R.id.progress);
@@ -68,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements  WeatherAdapter.O
         if(weatherToast != null) { weatherToast.cancel(); }
         weatherToast=Toast.makeText(this,data,Toast.LENGTH_LONG);
         weatherToast.show();
+
+        Intent detailIntent = new Intent(MainActivity.this,DetailActivity.class);
+        startActivity(detailIntent);
+
     }
 
     class RetreiveWeatherFromNetwork extends AsyncTask<String ,Void,String[]>
