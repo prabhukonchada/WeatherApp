@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements  WeatherAdapter.O
     private ProgressBar progressBar;
     WeatherAdapter weatherAdapter;
     Toast weatherToast;
+    static String WEATHER_INFO="WEATHER_INFORMATION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +67,8 @@ public class MainActivity extends AppCompatActivity implements  WeatherAdapter.O
 
     @Override
     public void onItemClicked(String data) {
-        if(weatherToast != null) { weatherToast.cancel(); }
-        weatherToast=Toast.makeText(this,data,Toast.LENGTH_LONG);
-        weatherToast.show();
-
         Intent detailIntent = new Intent(MainActivity.this,DetailActivity.class);
+        detailIntent.putExtra(WEATHER_INFO,data);
         startActivity(detailIntent);
 
     }
